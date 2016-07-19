@@ -12,6 +12,16 @@ public class SList<T> {
   public String toString() {
     String nString = n == null ? "" : " n" + String.format(ListPrint.VALUE_FORMAT, n.v);
 
-    return "[v" + String.format(ListPrint.VALUE_FORMAT, v) + nString + "]";
+    return "[" + String.format(ListPrint.VALUE_FORMAT, v) + nString + "]";
   }
-}
+
+  public static int size(SList<?> slist) {
+    int size = 0;
+    while (slist != null) {
+      slist = slist.n;
+      ++size;
+    }
+
+    return size;
+  }
+ }

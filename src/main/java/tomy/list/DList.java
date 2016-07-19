@@ -16,9 +16,23 @@ public class DList<T> {
   public String toString() {
     BiFunction<DList<T>, Character, String>
         refToValueFunc = (ref, prefix) -> ref == null ? "" : " " + prefix + String.format(ListPrint.VALUE_FORMAT, ref.v);
-    String nString = refToValueFunc.apply(n, 'n');
     String pString = refToValueFunc.apply(p, 'p');
+    String nString = refToValueFunc.apply(n, 'n');
 
-    return "[v" + String.format(ListPrint.VALUE_FORMAT, v) + nString + pString + "]";
+    return "[" + String.format(ListPrint.VALUE_FORMAT, v) + pString + nString + "]";
+  }
+
+  public static int size(DList<?> dlist) {
+    int size = 0;
+    DList<?> cur = dlist;
+    while (cur != null) {
+      cur = cur.n;
+      ++size;
+      if (cur == dlist) {
+        break;
+      }
+    }
+
+    return size;
   }
 }

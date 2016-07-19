@@ -28,7 +28,7 @@ public class TrieOp {
     return true;
   }
 
-  public static boolean search(Trie trie, String s) {
+  public static boolean search(Trie trie, String s, boolean prefix) {
     Trie cur = trie;
     for (int i = 0; i < s.length(); ++i) {
       char c = s.charAt(i);
@@ -39,7 +39,7 @@ public class TrieOp {
       }
     }
 
-    return cur.eos;
+    return prefix ? true : cur.eos;
   }
 
   public static boolean remove(Trie trie, String s) {

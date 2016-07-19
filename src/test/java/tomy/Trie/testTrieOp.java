@@ -1,12 +1,9 @@
-package tomy.Trie;
+package tomy.trie;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tomy.TestBase;
 import tomy.random.RandomString;
-import tomy.trie.Trie;
-import tomy.trie.TrieOp;
-import tomy.trie.TriePrint;
 
 import static tomy.random.RandomGen.RANDOM;
 
@@ -50,20 +47,26 @@ public class TestTrieOp extends TestBase {
 
     for (String s: stringList) {
       LOGGER.debug("+ " + s + " -> " + TrieOp.insert(trie, s));
-      LOGGER.debug("? " + s + " -> " + TrieOp.search(trie, s));
+      LOGGER.debug("? " + s + " -> " + TrieOp.search(trie, s, false));
 
-//      String s2 = s.replace('a', 'd').replace('b', 'c');
-//      LOGGER.debug("? " + s2 + " -> " + TrieOp.search(trie, s2));
+      String s2 = s.replace('a', 'd').replace('b', 'c');
+      LOGGER.debug("? " + s2 + " -> " + TrieOp.search(trie, s2, false));
+
+      if (s.length() > 1) {
+        String s3 = s.substring(0, s.length() - 1);
+        LOGGER.debug("? " + s3 + " -> " + TrieOp.search(trie, s3, false));
+        LOGGER.debug("P? " + s3 + " -> " + TrieOp.search(trie, s3, true));
+      }
     }
 
     for (String s: stringList) {
-//      String s2 = s.replace('a', 'd').replace('b', 'c');
-//      LOGGER.debug("- " + s2 + " -> " + TrieOp.remove(trie, s2));
+      String s2 = s.replace('a', 'd').replace('b', 'c');
+      LOGGER.debug("- " + s2 + " -> " + TrieOp.remove(trie, s2));
 
-      LOGGER.debug("? " + s + " -> " + TrieOp.search(trie, s));
+      LOGGER.debug("? " + s + " -> " + TrieOp.search(trie, s, false));
 
       LOGGER.debug("- " + s + " -> " + TrieOp.remove(trie, s));
-      LOGGER.debug("? " + s + " -> " + TrieOp.search(trie, s));
+      LOGGER.debug("? " + s + " -> " + TrieOp.search(trie, s, false));
 
       TriePrint.printBfs(trie);
     }

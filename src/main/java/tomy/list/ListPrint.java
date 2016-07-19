@@ -27,16 +27,16 @@ public class ListPrint {
 
   public static String toString(DList<?> list) {
     StringBuilder result = new StringBuilder();
-    boolean first = false;
+    boolean first = true;
     DList head = null;
     for (;list != null && list != head; list = list.n) {
       if (first) {
         head = list;
+        first = false;
       } else {
         result.append(" ");
       }
       result.append(list.toString());
-      first = true;
     }
 
     return result.toString();

@@ -62,4 +62,19 @@ public class RandomList {
 
     return head;
   }
+
+  public static DList<Integer> genRandCList(int size) {
+    if (size == 0) {
+      return null;
+    }
+    DList<Integer> head = genRandDList(size);
+    DList<Integer> cur = head;
+    while (cur.n != null) {
+      cur = cur.n;
+    }
+    cur.n = head;
+    head.p = cur;
+
+    return head;
+  }
 }

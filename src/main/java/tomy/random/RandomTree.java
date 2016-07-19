@@ -1,5 +1,8 @@
 package tomy.random;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Stack;
 
 import tomy.tree.Tree;
@@ -82,6 +85,28 @@ public class RandomTree {
 
     pos = fillTreeWithOrderedInValue(tree.r, pos);
     return pos;
+  }
+
+  public static Tree getRandTreeNode(Tree tree) {
+    Objects.requireNonNull(tree);
+
+    Stack<Tree> stackTree = new Stack<>();
+    Tree cur = tree;
+
+    List<Tree> listAllNodes = new ArrayList<>();
+    while (cur != null || !stackTree.isEmpty()) {
+      if (cur != null) {
+        stackTree.push(cur);
+        cur = cur.l;
+      } else {
+        cur = stackTree.pop();
+        listAllNodes.add(cur);
+
+        cur = cur.r;
+      }
+    }
+
+    return listAllNodes.get(RandomGen.RANDOM.nextInt(listAllNodes.size()));
   }
 
 }
