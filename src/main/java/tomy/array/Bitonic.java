@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Bitonic {
   private static int binarySearchDescending(int[] nums, int begin, int end, int k) {
     while (begin < end) {
-      int m = (begin + end) >> 1;
+      int m = begin + ((end - begin) >> 1);
       if (nums[m] == k) {
         return m;
       } else if (nums[m] < k) {
@@ -35,7 +35,7 @@ public class Bitonic {
     int l = 0;
     int r = nums.length - 1;
     while (l < r) {
-      int m = (l + r) >> 1;
+      int m = l + ((r - l) >> 1);
 
       if (k == nums[m]) {
         return m;
@@ -46,6 +46,7 @@ public class Bitonic {
           return leftIndex;
         }
         //@@ we use [m, r] (right bound is inclusive)
+        //@@ java doesn't have binary search descending
         int rightIndex = binarySearchDescending(nums, m, r, k);
         if (rightIndex >= 0) {
           return rightIndex;
@@ -60,6 +61,7 @@ public class Bitonic {
       }
     }
 
+    //@@ since we use nums[l], we assume nums.len > 0
     return nums[l] == k ? l : -1;
 
     // check num != null

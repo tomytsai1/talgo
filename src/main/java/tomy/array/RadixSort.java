@@ -39,7 +39,7 @@ public class RadixSort {
       int pos = from;
       int neg = to - 1;
 
-      //!!! if we use "while (pos < neg)" , an ambiguous case is, after some iterations, if pos == neg - 2,
+      //@@@ if we use "while (pos < neg)" , an ambiguous case is, after some iterations, if pos == neg - 2,
       // after swapping, we do (++pos, --neg) => new pos == new neg, and then a[pos] may belong to either 0 or 1 side
       // then, if a[pos] is actually on the 0 side, we miss this element (because we treat pos as ((last 0 side) + 1)
       for (;;) {
@@ -59,7 +59,7 @@ public class RadixSort {
         ArrayUtil.swap(a, pos++, neg--);
       }
 
-      mask >>>= 1; //!!! need to use zero-filled shift (>>>) instead of sign-filled shift (>>)
+      mask >>>= 1; //@@@ need to use zero-filled shift (>>>) instead of sign-filled shift (>>)
       radixMsbHelper(a, from, pos, mask);
 
       from = pos;
@@ -69,9 +69,9 @@ public class RadixSort {
   public static void radixLsb(int[] a) {
     Preconditions.checkArgument(a != null);
 
-    //!!! here we need a *stable 0-1 sort*, so we can not use the quick sort
+    //@@@ here we need a *stable 0-1 sort*, so we can not use the quick sort
     // Also, we need to swap a[]/b[] for even times, so the final values will remain in a[]
-    // Fortunately number of bits in int (32) is even, so we don't worry about this problem 
+    // Fortunately number of bits in int (32) is even, so we don't worry about this problem
     int[] b = new int[a.length];
     for (int mask = 1; mask != 0; mask <<= 1) {
       int index = 0;

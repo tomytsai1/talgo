@@ -2,9 +2,6 @@ package tomy.tree;
 
 public class LowestCommonAncestor {
   public static Tree findLowestCommonAncestor(Tree root, Tree node1, Tree node2) {
-    //!! node1 || node2 == null
-    //!! root == null
-
     //@@ we need deal with root == null case, unless we don't do recursive call on null cases
     if (root == null || root == node1 || root == node2) {
       return root;

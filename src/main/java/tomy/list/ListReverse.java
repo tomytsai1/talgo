@@ -12,7 +12,7 @@ public class ListReverse {
       // prev = cur
       // cur = next
 
-    //!!! remember to check if we set the very first node.n to null (which will become the new tail
+    //@@@ remember to check if we set the very first node.n to null (which will become the new tail
     SList<T> prev = null;
     while (cur != null) {
       SList<T> next = cur.n;
@@ -36,7 +36,7 @@ public class ListReverse {
       int revK = k;
       SList<T> curTail = cur;
       SList<T> prev = null;
-      //!!! alt: we can combine the inner loop and outer loop into one
+      //@@@ alt: we can combine the inner loop and outer loop into one
       // then we use if (revK == k) { do init setup }
       // and if (revK == 0) { do group-of-k chaining }
       do {
@@ -87,7 +87,7 @@ public class ListReverse {
       prevTail = curTail;
       prevTail.n = cur;
 
-      //!!! note that "while (--revK > 0)" will run the loop for (init k - 1) times
+      //@@@ note that "while (--revK > 0)" will run the loop for (init k - 1) times
       // In comparison, if we use "do {} while (--revK > 0)", if will run the loop for k times, but need to be careful
       // about init condition (cur != null)
       revK = k;

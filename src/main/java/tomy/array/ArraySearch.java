@@ -1,7 +1,7 @@
 package tomy.array;
 
 public class ArraySearch {
-  //!!! basic search loop
+  //@@@ basic search loop
   // A. for finding x in (start, end]
   //    1. while (l < r) { m = (l+r)/2; ... }  => assume [l, r] in legal range, and final index is l (== r)
   //    2. while (l < r - 1) { m = (l+r+1)/2; ... }  => assume [l, r) in legal range, and final index is l (== r - 1)
