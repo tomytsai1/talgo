@@ -17,7 +17,7 @@ public class RandomList {
     SList<Integer> prev = null;
     Map<Integer, Integer> exchangedValues = new HashMap<>();
     for (int i = 0; i < size; ++i) {
-      int newIndex = i + RandomGen.RANDOM.nextInt(size - i);
+      int newIndex = i + RandomGen.getRandom().nextInt(size - i);
       SList<Integer> cur = new SList<>(exchangedValues.getOrDefault(newIndex, newIndex));
 
       if (head == null) {
@@ -44,7 +44,7 @@ public class RandomList {
     DList<Integer> prev = null;
     Map<Integer, Integer> exchangedValues = new HashMap<>();
     for (int i = 0; i < size; ++i) {
-      int newIndex = i + RandomGen.RANDOM.nextInt(size - i);
+      int newIndex = i + RandomGen.getRandom().nextInt(size - i);
       DList<Integer> cur = new DList<>(exchangedValues.getOrDefault(newIndex, newIndex));
 
       if (head == null) {

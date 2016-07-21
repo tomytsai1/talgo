@@ -5,8 +5,7 @@ import java.util.stream.IntStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tomy.TestBase;
-
-import static tomy.random.RandomGen.RANDOM;
+import tomy.random.RandomGen;
 
 
 public class TestBitonic extends TestBase {
@@ -19,15 +18,15 @@ public class TestBitonic extends TestBase {
     Object[][] result = new Object [NUM_TEST][];
 
     for (int i = 0; i < NUM_TEST; ++i) {
-      int len = MIN_LEN + RANDOM.nextInt(MAX_LEN - MIN_LEN + 1);
+      int len = MIN_LEN + RandomGen.getRandom().nextInt(MAX_LEN - MIN_LEN + 1);
       int[] a = IntStream.range(0, len).toArray();
 
       int k = 0;
       if (len > 0) {
         //@@ nextInt(x) , x must be > 0
-        int lenReverse = RANDOM.nextInt(len);
+        int lenReverse = RandomGen.getRandom().nextInt(len);
         ArrayReverse.reverse(a, a.length - lenReverse, a.length);
-        k = RANDOM.nextInt(len);
+        k = RandomGen.getRandom().nextInt(len);
       }
       result[i] = new Object[] {a, k};
     }

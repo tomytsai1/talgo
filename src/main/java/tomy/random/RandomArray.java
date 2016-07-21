@@ -2,8 +2,6 @@ package tomy.random;
 
 import com.google.common.base.Preconditions;
 
-import static tomy.random.RandomGen.RANDOM;
-
 
 public class RandomArray {
   public static int[] genRandIntPerm(int size) {
@@ -11,7 +9,7 @@ public class RandomArray {
 
     int[] result = new int[size];
     for (int i = 0; i < size; ++i) {
-      int swapIndex = RANDOM.nextInt(i + 1);
+      int swapIndex = RandomGen.getRandom().nextInt(i + 1);
       if (swapIndex == i) {
         result[i] = i;
       } else {
@@ -27,7 +25,7 @@ public class RandomArray {
 
     int[] result = new int[size];
     for (int i = 0; i < size; ++i) {
-      result[i] = RANDOM.nextInt(max - min + 1) + min;
+      result[i] = RandomGen.getRandom().nextInt(max - min + 1) + min;
     }
     return result;
   }

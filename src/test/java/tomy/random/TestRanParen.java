@@ -3,9 +3,6 @@ package tomy.random;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tomy.TestBase;
-import tomy.tree.Tree;
-
-import static tomy.random.RandomGen.RANDOM;
 
 
 public class TestRanParen extends TestBase {
@@ -18,7 +15,7 @@ public class TestRanParen extends TestBase {
     Object[][] result = new Object [NUM_TEST][];
 
     for (int i = 0; i < NUM_TEST; ++i) {
-      int len = MIN_LEN / 2 + RANDOM.nextInt(MAX_LEN / 2 - MIN_LEN / 2 + 1);
+      int len = MIN_LEN / 2 + RandomGen.getRandom().nextInt(MAX_LEN / 2 - MIN_LEN / 2 + 1);
       result[i] = new Object[] {len * 2};
     }
     return result;

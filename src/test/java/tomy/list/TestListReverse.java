@@ -3,9 +3,8 @@ package tomy.list;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tomy.TestBase;
+import tomy.random.RandomGen;
 import tomy.random.RandomList;
-
-import static tomy.random.RandomGen.RANDOM;
 
 
 public class TestListReverse extends TestBase {
@@ -20,7 +19,7 @@ public class TestListReverse extends TestBase {
     Object[][] result = new Object [NUM_TEST][];
 
     for (int i = 0; i < NUM_TEST; ++i) {
-      int size = MIN_LEN + RANDOM.nextInt(MAX_LEN - MIN_LEN + 1);
+      int size = MIN_LEN + RandomGen.getRandom().nextInt(MAX_LEN - MIN_LEN + 1);
       SList<Integer> slist = RandomList.genRandSList(size);
       result[i] = new Object[] {slist};
     }
@@ -41,7 +40,7 @@ public class TestListReverse extends TestBase {
     Object[][] result = new Object [NUM_TEST][];
 
     for (int i = 0; i < NUM_TEST; ++i) {
-      int size = MIN_LEN + RANDOM.nextInt(MAX_LEN - MIN_LEN + 1);
+      int size = MIN_LEN + RandomGen.getRandom().nextInt(MAX_LEN - MIN_LEN + 1);
       DList<Integer> dlist = RandomList.genRandDList(size);
       result[i] = new Object[] {dlist};
     }
@@ -62,7 +61,7 @@ public class TestListReverse extends TestBase {
     Object[][] result = new Object [NUM_TEST][];
 
     for (int i = 0; i < NUM_TEST; ++i) {
-      int size = MIN_LEN + RANDOM.nextInt(MAX_LEN - MIN_LEN + 1);
+      int size = MIN_LEN + RandomGen.getRandom().nextInt(MAX_LEN - MIN_LEN + 1);
       DList<Integer> clist = RandomList.genRandCList(size);
       result[i] = new Object[] {clist};
     }
@@ -83,8 +82,8 @@ public class TestListReverse extends TestBase {
     Object[][] result = new Object [NUM_TEST][];
 
     for (int i = 0; i < NUM_TEST; ++i) {
-      int size = MIN_LEN + RANDOM.nextInt(MAX_LEN - MIN_LEN + 1);
-      int k = MIN_K + RANDOM.nextInt(MAX_K - MIN_K + 1);
+      int size = MIN_LEN + RandomGen.getRandom().nextInt(MAX_LEN - MIN_LEN + 1);
+      int k = MIN_K + RandomGen.getRandom().nextInt(MAX_K - MIN_K + 1);
       SList<Integer> slist = RandomList.genRandSList(size);
       result[i] = new Object[] {slist, k};
     }

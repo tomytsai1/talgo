@@ -1,6 +1,7 @@
 package tomy.interval;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -249,4 +250,226 @@ public class IntervalMerge {
 
     return merged;
   }
+
+  public static List<IntervalWithHeight> mergeIntervalsWithHeight(List<? extends IntervalWithHeight>... intervalLists) {
+    Objects.requireNonNull(intervalLists);
+
+    class IntervalMark {
+      public int listPos;
+      public int pos;
+      public IntervalWithHeight interval;
+
+      public IntervalMark(int listPos, int pos, IntervalWithHeight interval) {
+        this.listPos = listPos;
+        this.pos = pos;
+        this.interval = interval;
+      }
+    }
+
+    PriorityQueue<IntervalMark> intervalQue = new PriorityQueue<>((mark1, mark2) -> {
+      IntervalWithHeight interval1 = mark1.interval;
+      IntervalWithHeight interval2 = mark2.interval;
+
+      if (interval1.begin != interval2.begin) {
+        return interval1.begin - interval2.begin;
+      }
+
+      //@@ it is critical that we sort on begin, height, (end doesn't matter) order
+      // such we don't need to deal with out-of-order heights for the inputs
+      if (interval1.height != interval2.height) {
+        return interval2.height - interval1.height;
+      }
+
+      return interval1.end - interval2.end;
+    });
+
+    int listPos = 0;
+    for (List<? extends IntervalWithHeight> intervalList : intervalLists) {
+      if (!intervalList.isEmpty()) {
+        intervalQue.add(new IntervalMark(listPos, 0, intervalLists[listPos].get(0)));
+      }
+      ++listPos;
+    }
+
+    List<IntervalWithHeight> merged = new ArrayList<>();
+    while (!intervalQue.isEmpty()) {
+      IntervalMark intervalMark = intervalQue.poll();
+      IntervalWithHeight next = intervalMark.interval;
+      if (merged.isEmpty()) {
+        //@@ note: we cannot do merged.add(next), because later we may edit the last, and change the input value
+        merged.add(new IntervalWithHeight(next.begin, next.end, next.height));
+      } else {
+        IntervalWithHeight cur = merged.get(merged.size() - 1);
+        if (cur.end < next.begin) {
+          if (cur.end + 1 == next.begin && cur.height == next.height) {
+            cur.end = next.end;
+          } else {
+            merged.add(new IntervalWithHeight(next.begin, next.end, next.height));
+          }
+        } else if (cur.height >= next.height) {
+          if (next.end > cur.end) {
+            intervalQue.add(new IntervalMark(-1, 0,
+                new IntervalWithHeight(cur.end + 1, next.end, next.height)));
+          }
+        } else { // cur.height < next.height
+          //@@ note here we don't worry about next.begin == cur.begin, because we set the comparator s.t. this doesn't happen
+
+          //@@ we will modify cur.end, so need to do condition check before modifying it
+          if (cur.end > next.end) {
+            intervalQue.add(new IntervalMark(-1, 0, new IntervalWithHeight(next.end + 1, cur.end, cur.height)));
+          }
+
+          cur.end = next.begin - 1;
+          merged.add(new IntervalWithHeight(next.begin, next.end, next.height));
+        }
+      }
+
+      if (intervalMark.listPos >= 0
+          && intervalMark.pos < intervalLists[intervalMark.listPos].size() - 1) {
+        intervalQue.add(new IntervalMark(intervalMark.listPos, intervalMark.pos + 1,
+            intervalLists[intervalMark.listPos].get(intervalMark.pos + 1)));
+      }
+    }
+
+    return merged;
+  }
+
+  static class EndPoint implements Comparable<EndPoint> {
+    int x;
+    int height;
+    boolean isEnd;
+
+    EndPoint(int x, int height, boolean isEnd) {
+      this.x = x;
+      this.height = height;
+      this.isEnd = isEnd;
+    }
+
+    @Override
+    public int compareTo(EndPoint other) {
+      if (this.x != other.x) {
+        return this.x - other.x;
+      }
+
+      //@@ tricky: start point always come before end point, so we can stitch two continuous blocks
+      if (this.isEnd != other.isEnd) {
+        return Boolean.compare(this.isEnd, other.isEnd);
+      }
+
+      //@@ tricky: the height order are designed to keep the max height in queue as long as possible
+      return this.isEnd ? this.height - other.height : other.height - this.height;
+    }
+  }
+
+  public static List<IntervalWithHeight> mergeIntervalsWithHeight2(List<? extends IntervalWithHeight>... intervalLists) {
+    Objects.requireNonNull(intervalLists);
+
+    List<EndPoint> allEndPoints = new ArrayList<>();
+    Arrays.stream(intervalLists).forEach(intervalList ->
+        intervalList.forEach(interval -> {
+          allEndPoints.add(new EndPoint(interval.begin, interval.height, false));
+          allEndPoints.add(new EndPoint(interval.end, interval.height, true));
+        }));
+    Collections.sort(allEndPoints);
+
+    PriorityQueue<Integer> heights = new PriorityQueue<>(Collections.reverseOrder());
+    List<EndPoint> merged = new ArrayList<>();
+    for (EndPoint endPoint : allEndPoints) {
+      if (!endPoint.isEnd) {
+        if (heights.isEmpty() || endPoint.height > heights.peek()) {
+          merged.add(new EndPoint(endPoint.x, endPoint.height, false));
+        }
+        heights.add(endPoint.height);
+      } else {
+        heights.remove(endPoint.height);
+
+        if (heights.isEmpty()) {
+          merged.add(new EndPoint(endPoint.x + 1, 0, false));
+        } else if (heights.peek() < endPoint.height) {
+          merged.add(new EndPoint(endPoint.x + 1, heights.peek(), false));
+        }
+      }
+    }
+
+    int prevX = 0;
+    int prevH = 0;
+    List<IntervalWithHeight> result = new ArrayList<>();
+    for (EndPoint endPoint : merged) {
+      if (prevH != 0) {
+        //@@ we may have a block with 0 height, and such block will have negative len
+        // we can avoid this logic by re-defining the range as [x, y) , instead of [x,y], see next function
+        if (endPoint.x > prevX) {
+          if (result.isEmpty()) {
+            result.add(new IntervalWithHeight(prevX, endPoint.x - 1, prevH));
+          } else {
+            IntervalWithHeight lastInterval = result.get(result.size() - 1);
+            //@@ here we have very complex logic to concatenate two continuos blocks
+            // we can avoid this logic by re-defining the range as [x, y) , instead of [x,y], see next function
+            if (lastInterval.end + 1 < prevX || lastInterval.height != prevH) {
+              result.add(new IntervalWithHeight(prevX, endPoint.x - 1, prevH));
+            } else {
+              lastInterval.end = endPoint.x - 1;
+            }
+          }
+        }
+      }
+      prevX = endPoint.x;
+      prevH = endPoint.height;
+    }
+
+    return result;
+  }
+
+  public static List<IntervalWithHeight> mergeIntervalsWithHeight3(List<? extends IntervalWithHeight>... intervalLists) {
+    Objects.requireNonNull(intervalLists);
+
+    List<EndPoint> allEndPoints = new ArrayList<>();
+    Arrays.stream(intervalLists).forEach(intervalList ->
+        intervalList.forEach(interval -> {
+          allEndPoints.add(new EndPoint(interval.begin, interval.height, false));
+          allEndPoints.add(new EndPoint(interval.end + 1, interval.height, true));
+        }));
+    Collections.sort(allEndPoints);
+
+    PriorityQueue<Integer> heights = new PriorityQueue<>(Collections.reverseOrder());
+    List<EndPoint> merged = new ArrayList<>();
+    for (EndPoint endPoint : allEndPoints) {
+      if (!endPoint.isEnd) {
+        if (heights.isEmpty() || endPoint.height > heights.peek()) {
+          merged.add(new EndPoint(endPoint.x, endPoint.height, false));
+        }
+        heights.add(endPoint.height);
+      } else {
+        heights.remove(endPoint.height);
+
+        if (heights.isEmpty()) {
+          merged.add(new EndPoint(endPoint.x, 0, false));
+        } else if (heights.peek() < endPoint.height) {
+          merged.add(new EndPoint(endPoint.x, heights.peek(), false));
+        }
+      }
+    }
+
+    int prevX = 0;
+    int prevH = 0;
+    List<IntervalWithHeight> result = new ArrayList<>();
+    for (EndPoint endPoint : merged) {
+      if (prevH != 0) {
+        //@@ we don't need to worry if we will have a block with 0 height, because we designed the endpoint comparator
+        // carefully above to avoid this case
+        if (result.isEmpty()) {
+          result.add(new IntervalWithHeight(prevX, endPoint.x - 1, prevH));
+        } else {
+          //@@ we don't need to worry if we will have two continuous blocks, because we designed the endpoint comparator
+          // carefully above to avoid this case
+          result.add(new IntervalWithHeight(prevX, endPoint.x - 1, prevH));
+        }
+      }
+      prevX = endPoint.x;
+      prevH = endPoint.height;
+    }
+
+    return result;
+  }
+
 }

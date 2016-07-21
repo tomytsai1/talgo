@@ -7,8 +7,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tomy.TestBase;
-
-import static tomy.random.RandomGen.RANDOM;
+import tomy.random.RandomGen;
 
 
 public class TestRotatedSorted extends TestBase {
@@ -21,14 +20,14 @@ public class TestRotatedSorted extends TestBase {
     Object[][] result = new Object [NUM_TEST][];
 
     for (int i = 0; i < NUM_TEST; ++i) {
-      int len = MIN_LEN + RANDOM.nextInt(MAX_LEN - MIN_LEN + 1);
+      int len = MIN_LEN + RandomGen.getRandom().nextInt(MAX_LEN - MIN_LEN + 1);
       int[] a = IntStream.range(0, len).toArray();
 
       int k = 0;
       if (len > 0) {
-        int lenRotate = RANDOM.nextInt(len);
+        int lenRotate = RandomGen.getRandom().nextInt(len);
         BlockSwap.blockSwap(a, lenRotate);
-        k = RANDOM.nextInt(len);
+        k = RandomGen.getRandom().nextInt(len);
       }
       result[i] = new Object[] {a, k};
     }

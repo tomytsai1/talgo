@@ -4,8 +4,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tomy.TestBase;
 import tomy.random.RandomArray;
-
-import static tomy.random.RandomGen.RANDOM;
+import tomy.random.RandomGen;
 
 
 public class TestRangeMinMax extends TestBase {
@@ -20,7 +19,7 @@ public class TestRangeMinMax extends TestBase {
     Object[][] result = new Object [NUM_TEST][];
 
     for (int i = 0; i < NUM_TEST; ++i) {
-      int len = MIN_LEN + RANDOM.nextInt(MAX_LEN - MIN_LEN + 1);
+      int len = MIN_LEN + RandomGen.getRandom().nextInt(MAX_LEN - MIN_LEN + 1);
       int[] a = RandomArray.genRandInt(len, MIN_VAL, MAX_VAL);
       result[i] = new Object[] {a};
     }

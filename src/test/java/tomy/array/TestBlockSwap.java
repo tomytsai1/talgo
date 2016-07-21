@@ -1,13 +1,12 @@
 package tomy.array;
 
-import com.google.common.primitives.Ints;
 import java.util.stream.IntStream;
+
+import com.google.common.primitives.Ints;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tomy.TestBase;
-import tomy.array.BlockSwap;
-
-import static tomy.random.RandomGen.RANDOM;
+import tomy.random.RandomGen;
 
 
 public class TestBlockSwap extends TestBase {
@@ -20,10 +19,10 @@ public class TestBlockSwap extends TestBase {
     Object[][] result = new Object [NUM_TEST][];
 
     for (int i = 0; i < NUM_TEST; ++i) {
-      int len = MIN_LEN + RANDOM.nextInt(MAX_LEN - MIN_LEN + 1);
+      int len = MIN_LEN + RandomGen.getRandom().nextInt(MAX_LEN - MIN_LEN + 1);
 
       int[] a = IntStream.range(0, len).toArray();
-      int middle = RANDOM.nextInt(len + 1);
+      int middle = RandomGen.getRandom().nextInt(len + 1);
 
       result[i] = new Object[] {a, middle};
     }

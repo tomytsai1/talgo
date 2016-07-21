@@ -1,11 +1,9 @@
 package tomy;
 
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.log4testng.Logger;
-
-import static tomy.random.RandomGen.RANDOM_SEED;
+import tomy.random.RandomGen;
 
 
 public class TestBase {
@@ -14,7 +12,7 @@ public class TestBase {
 
   @BeforeTest
   public void printRandom() {
-    LOGGER.debug("RANDOM SEED = " + RANDOM_SEED);
+    LOGGER.debug("RANDOM SEED = " + RandomGen.getRandomSeed());
   }
 
   @BeforeMethod

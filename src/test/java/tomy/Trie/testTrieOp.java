@@ -3,9 +3,8 @@ package tomy.trie;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tomy.TestBase;
+import tomy.random.RandomGen;
 import tomy.random.RandomString;
-
-import static tomy.random.RandomGen.RANDOM;
 
 
 public class TestTrieOp extends TestBase {
@@ -22,11 +21,11 @@ public class TestTrieOp extends TestBase {
     Object[][] result = new Object [NUM_TEST][];
 
     for (int i = 0; i < NUM_TEST; ++i) {
-      int numString = MIN_NUM_STR + RANDOM.nextInt(MAX_NUM_STR - MIN_NUM_STR + 1);
+      int numString = MIN_NUM_STR + RandomGen.getRandom().nextInt(MAX_NUM_STR - MIN_NUM_STR + 1);
 
       String[] stringList = new String[numString];
       for (int j = 0; j < numString; ++j) {
-        int len = MIN_STR_LEN + RANDOM.nextInt(MAX_STR_LEN - MIN_STR_LEN + 1);
+        int len = MIN_STR_LEN + RandomGen.getRandom().nextInt(MAX_STR_LEN - MIN_STR_LEN + 1);
         stringList[j] = RandomString.genRandStr(len, CHAR_MIN, CHAR_MAX);
       }
       result[i] = stringList;

@@ -5,8 +5,7 @@ import java.util.stream.IntStream;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import tomy.TestBase;
-
-import static tomy.random.RandomGen.RANDOM;
+import tomy.random.RandomGen;
 
 
 public class TestPalindrome extends TestBase {
@@ -19,10 +18,10 @@ public class TestPalindrome extends TestBase {
     Object[][] result = new Object [NUM_TEST][];
 
     for (int i = 0; i < NUM_TEST; ++i) {
-      int len = MIN_LEN + RANDOM.nextInt(MAX_LEN - MIN_LEN + 1);
+      int len = MIN_LEN + RandomGen.getRandom().nextInt(MAX_LEN - MIN_LEN + 1);
 
       int[] a = IntStream.range(0, len).toArray();
-      int middle = RANDOM.nextInt(len + 1);
+      int middle = RandomGen.getRandom().nextInt(len + 1);
 
       result[i] = new Object[] {a, middle};
     }

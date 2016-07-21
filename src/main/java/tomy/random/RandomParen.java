@@ -2,7 +2,6 @@ package tomy.random;
 
 import com.google.common.base.Preconditions;
 
-import static tomy.random.RandomGen.RANDOM;
 
 public class RandomParen {
   public static String genRandParen(int len) {
@@ -12,7 +11,7 @@ public class RandomParen {
     StringBuilder sb = new StringBuilder(len);
     int numRight = 0;
     for (int i = 0; i < len; ++i) {
-      if (numRight * 2 >= i || (RANDOM.nextBoolean() && (i - numRight < maxNumLeft))) {
+      if (numRight * 2 >= i || (RandomGen.getRandom().nextBoolean() && (i - numRight < maxNumLeft))) {
         sb.append('(');
       } else {
         ++numRight;

@@ -2,8 +2,7 @@ package tomy;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import static tomy.random.RandomGen.RANDOM;
+import tomy.random.RandomGen;
 
 
 public class TestGcd extends TestBase {
@@ -17,8 +16,8 @@ public class TestGcd extends TestBase {
 
     for (int i = 0; i < NUM_TEST; ++i) {
       result[i] = new Object[] {
-          MIN_VALUE + RANDOM.nextInt(MAX_VALUE - MIN_VALUE),
-          MIN_VALUE + RANDOM.nextInt(MAX_VALUE - MIN_VALUE)};
+          MIN_VALUE + RandomGen.getRandom().nextInt(MAX_VALUE - MIN_VALUE),
+          MIN_VALUE + RandomGen.getRandom().nextInt(MAX_VALUE - MIN_VALUE)};
     }
     return result;
   }

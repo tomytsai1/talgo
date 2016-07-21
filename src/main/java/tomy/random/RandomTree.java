@@ -106,7 +106,7 @@ public class RandomTree {
       }
     }
 
-    return listAllNodes.get(RandomGen.RANDOM.nextInt(listAllNodes.size()));
+    return listAllNodes.get(RandomGen.getRandom().nextInt(listAllNodes.size()));
   }
 
 }
