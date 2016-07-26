@@ -27,7 +27,7 @@ public class TestRandomInterval extends TestBase {
   @Test(dataProvider = "dataFromRand")
   public void testRandomInterval(int size) {
     List<Interval> list = RandomInterval.genRandNonOverlappedInterval(size, 1, 5, 1, 10);
-    LOGGER.debug(String.format("size = %2d  list of interval: %s", size, list.toString()));
+    LOGGER.debug(String.format("totalHeight = %2d  list of interval: %s", size, list.toString()));
   }
 
 }

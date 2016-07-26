@@ -25,7 +25,7 @@ public class TestRandomArray extends TestBase {
   @Test(dataProvider = "dataFromRand")
   public void testRandomArray(int size) {
     int[] a = RandomArray.genRandIntPerm(size);
-    LOGGER.debug(String.format("size = %2d  a[] = %s", size, ArrayPrint.toString(a)));
+    LOGGER.debug(String.format("totalHeight = %2d  a[] = %s", size, ArrayPrint.toString(a)));
   }
 
 }

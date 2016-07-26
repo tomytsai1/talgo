@@ -8,7 +8,7 @@ public class RotatedSorted {
 
     int l = 0;
     int r = nums.length - 1;
-    while (l + 2 <= r) { // size >= 3
+    while (l + 2 <= r) { // totalHeight >= 3
       //@@ note we cannot write l + (r - l) >> 1 : "+" is higher than ">>"
       int m = l + ((r - l) >> 1);
       if (nums[m] == k) {

@@ -24,7 +24,7 @@ public class TestRanParen extends TestBase {
   @Test(dataProvider = "dataFromRand")
   public void testRandomParen(int len) {
     String paren = RandomParen.genRandParen(len);
-    LOGGER.debug(String.format("size = %2d  pren = %s", len, paren));
+    LOGGER.debug(String.format("totalHeight = %2d  pren = %s", len, paren));
   }
 
 }

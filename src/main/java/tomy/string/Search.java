@@ -33,15 +33,15 @@ public class Search {
 
     general case
         lpp[0] = 0
-        i = 0
-        while i < s.len
+        puzzleCurPos = 0
+        while puzzleCurPos < s.len
           precondition:
-            lpp[0 .. i - 1] okay
+            lpp[0 .. puzzleCurPos - 1] okay
 
-          if s[i] == s[k]
-            lpp[i++] = ++k
+          if s[puzzleCurPos] == s[k]
+            lpp[puzzleCurPos++] = ++k
           else if k == 0
-            lpp[i++] = 0
+            lpp[puzzleCurPos++] = 0
           else
             k = lpp[k - 1]
      */

@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.PriorityQueue;
 
+import com.google.common.collect.TreeMultiset;
+
 
 public class IntervalMerge {
   public static List<Interval> mergeIntervals(List<? extends Interval> list1, List<? extends Interval> list2) {
@@ -71,7 +73,7 @@ public class IntervalMerge {
       i1 = 0, i2 = 0
       result = new list
       result.push({int_max, int_min})
-      while i1 < list1.size && i2 < list2.size
+      while i1 < list1.totalHeight && i2 < list2.totalHeight
         selected = null
         if list1[i1] < list2[i2]
           selected = i1
@@ -85,7 +87,7 @@ public class IntervalMerge {
         else
           merge result.last with selected
 
-      while i1 < list1.size
+      while i1 < list1.totalHeight
         selected = i1
         ++i1
         if selected.begin - 1 > result.end
@@ -431,11 +433,12 @@ public class IntervalMerge {
         }));
     Collections.sort(allEndPoints);
 
-    PriorityQueue<Integer> heights = new PriorityQueue<>(Collections.reverseOrder());
+    //@@ we will need to add and remove the height randomly, and heights may have dups, so we need TreeMultiset
+    TreeMultiset<Integer> heights = TreeMultiset.create();
     List<EndPoint> merged = new ArrayList<>();
     for (EndPoint endPoint : allEndPoints) {
       if (!endPoint.isEnd) {
-        if (heights.isEmpty() || endPoint.height > heights.peek()) {
+        if (heights.isEmpty() || endPoint.height > heights.lastEntry().getElement()) {
           merged.add(new EndPoint(endPoint.x, endPoint.height, false));
         }
         heights.add(endPoint.height);
@@ -444,8 +447,8 @@ public class IntervalMerge {
 
         if (heights.isEmpty()) {
           merged.add(new EndPoint(endPoint.x, 0, false));
-        } else if (heights.peek() < endPoint.height) {
-          merged.add(new EndPoint(endPoint.x, heights.peek(), false));
+        } else if (heights.lastEntry().getElement() < endPoint.height) {
+          merged.add(new EndPoint(endPoint.x, heights.lastEntry().getElement(), false));
         }
       }
     }

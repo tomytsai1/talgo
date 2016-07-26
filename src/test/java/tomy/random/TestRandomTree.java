@@ -25,14 +25,14 @@ public class TestRandomTree extends TestBase {
 
   @Test(dataProvider = "dataFromRand")
   public void testRandomBT(int size) {
-    LOGGER.debug(String.format("size = %2d ", size));
+    LOGGER.debug(String.format("totalHeight = %2d ", size));
     Tree tree = RandomTree.genRandBT(size);
     TreePrint.printBfs(tree);
   }
 
   @Test(dataProvider = "dataFromRand")
   public void testRandomBST(int size) {
-    LOGGER.debug(String.format("size = %2d ", size));
+    LOGGER.debug(String.format("totalHeight = %2d ", size));
     Tree tree = RandomTree.genRandBST(size);
     TreePrint.printBfs(tree);
   }

@@ -28,7 +28,7 @@ public class TestListReverse extends TestBase {
 
   @Test(dataProvider = "slistDataFromRand")
   public void testReverseSList(SList<Integer> slist) {
-    LOGGER.debug("size = " + SList.size(slist));
+    LOGGER.debug("totalHeight = " + SList.size(slist));
     LOGGER.debug(ListPrint.toString(slist));
 
     SList<Integer> reversedList = ListReverse.reverseSList(slist);
@@ -49,7 +49,7 @@ public class TestListReverse extends TestBase {
 
   @Test(dataProvider = "dlistDataFromRand")
   public void testReverseDList(DList<Integer> dlist) {
-    LOGGER.debug("size = " + DList.size(dlist));
+    LOGGER.debug("totalHeight = " + DList.size(dlist));
     LOGGER.debug(ListPrint.toString(dlist));
 
     DList<Integer> reversedList = ListReverse.reverseDList(dlist);
@@ -70,7 +70,7 @@ public class TestListReverse extends TestBase {
 
   @Test(dataProvider = "clistDataFromRand")
   public void testReverseCList(DList<Integer> clist) {
-    LOGGER.debug("size = " + DList.size(clist));
+    LOGGER.debug("totalHeight = " + DList.size(clist));
     LOGGER.debug(ListPrint.toString(clist));
 
     DList<Integer> reversedList = ListReverse.reverseCList(clist);
@@ -92,7 +92,7 @@ public class TestListReverse extends TestBase {
 
   @Test(dataProvider = "slistDataAndKFromRand")
   public void testReverseSListEveryK(SList<Integer> slist, int k) {
-    LOGGER.debug("size = " + SList.size(slist) + " k = " + k);
+    LOGGER.debug("totalHeight = " + SList.size(slist) + " k = " + k);
     LOGGER.debug(ListPrint.toString(slist));
 
     SList<Integer> reversedList = ListReverse.reverseSListEveryK(slist, k);
@@ -101,7 +101,7 @@ public class TestListReverse extends TestBase {
 
   @Test(dataProvider = "slistDataAndKFromRand")
   public void testReverseSListEveryAltK(SList<Integer> slist, int k) {
-    LOGGER.debug("size = " + SList.size(slist) + " k = " + k);
+    LOGGER.debug("totalHeight = " + SList.size(slist) + " k = " + k);
     LOGGER.debug(ListPrint.toString(slist));
 
     SList<Integer> reversedList = ListReverse.reverseSListEveryAltK(slist, k);

@@ -12,9 +12,12 @@ KMP search (build Longest Proper Prefix)
 interleave pos and neg number (non-stable)
 max box stack recursive
 weighted interval scheduling
+longest increasing sequence
 BFS search path in 2D matrix (word game)
 merge K-sorted array
 shortest range sum > k, 1.all pos nums, 2. may have pos/zero/neg
 pond and islands
+
 max k buy-sell profit
 heap select
+max rectangle/sqaure in a 0/1 matrix

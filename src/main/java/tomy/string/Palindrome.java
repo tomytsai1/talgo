@@ -50,7 +50,7 @@ public class Palindrome {
     // cur[end - 1] = char[y] == char[end] //@@ this formula has 2 special cases (corner and corner - 1)
     // cur[y (0 <= y < end)] = char[y] == char[end] && prev[end + 1]
 
-    boolean[] prev = new boolean[str.length()]; // for i == 0..end, if char[i .. end] is palindrome
+    boolean[] prev = new boolean[str.length()]; // for puzzleCurPos == 0..end, if char[puzzleCurPos .. end] is palindrome
     boolean[] cur = new boolean[str.length()];
 
     if (str.isEmpty()) {

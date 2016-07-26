@@ -27,19 +27,19 @@ public class TestRandomList extends TestBase {
   @Test(dataProvider = "dataFromRand")
   public void testRandomSList(int size) {
     SList<Integer> slist = RandomList.genRandSList(size);
-    LOGGER.debug("size = " + size + " " + ListPrint.toString(slist));
+    LOGGER.debug("totalHeight = " + size + " " + ListPrint.toString(slist));
   }
 
   @Test(dataProvider = "dataFromRand")
   public void testRandomDList(int size) {
     DList<Integer> dlist = RandomList.genRandDList(size);
-    LOGGER.debug("size = " + size + " " + ListPrint.toString(dlist));
+    LOGGER.debug("totalHeight = " + size + " " + ListPrint.toString(dlist));
   }
 
   @Test(dataProvider = "dataFromRand")
   public void testRandomCList(int size) {
     DList<Integer> clist = RandomList.genRandCList(size);
-    LOGGER.debug("size = " + size + " " + ListPrint.toString(clist));
+    LOGGER.debug("totalHeight = " + size + " " + ListPrint.toString(clist));
   }
 
 }

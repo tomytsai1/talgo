@@ -65,6 +65,5 @@ public class MaxArea {
         while stack not empty
           (*) body
      */
-
   }
 }
